@@ -11,6 +11,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	background-color: #5e5fab;
 }
 
 main {
@@ -18,12 +19,13 @@ main {
 	width: 400px;
 	height: 550px;
 	margin: 0 auto;
-	top: 20rem;
+	top: 15rem;
 	background-color: #ffc9dc;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 3rem;
+	box-shadow: 0px 8px 6px -6px #000;
 }
 
 .calculator-container {
@@ -60,14 +62,37 @@ main {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-template-rows: repeat(5, 1fr);
-	grid-gap: 3px 3px;
+	grid-gap: 1px 1px;
 }
 
 .button {
+	margin: 0.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 2rem;
-	background-color: #5e5fab;
+	font-size: 2.5rem;
 	border-radius: 1rem;
+	box-shadow: 0px 7px 6px -6px #000;
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
+}
+
+.button:hover {
+	transform: scale(1.1);
+}
+
+.button:active {
+	background-color: #fdfdfd;
+}
+
+.purple {
+	background-color: #5e5fab;
+}
+
+.yellow {
+	background-color: #eed29c;
+}
+
+.pink {
+	background-color: #ff80a0;
 }
