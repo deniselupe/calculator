@@ -85,14 +85,14 @@ main {
 	background-color: #fdfdfd;
 }
 
-.purple {
+.number {
 	background-color: #5e5fab;
+}
+
+.operator {
+	background-color: #ff80a0;
 }
 
 .yellow {
 	background-color: #eed29c;
-}
-
-.pink {
-	background-color: #ff80a0;
 }
