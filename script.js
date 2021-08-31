@@ -1,7 +1,9 @@
-let operator;
-let displayVal = '';
-let num1 = 0;
-let num2 = 0;
+let displayNum1;
+let displayNum2;
+let num1 = null;
+let num2 = null;
+let displayText;
+let operatorVal = null;
 const clearButton = document.getElementById('clear');
 const backspaceButton = document.getElementById('backspace');
 const outputText = document.querySelector('.output-text');
@@ -12,17 +14,18 @@ const decimal = document.getElementById('decimal');
 const equals = document.getElementById('equals');
 
 
-numbers.forEach((number) => {
-	number.addEventListener('click', () => {
-		displayVal += number.textContent;
-		outputText.textContent = displayVal;
-		num1 = Number(displayVal);
-	});
-});
+const add = function(a, b) {
+	return a + b;
+};
 
-operators.forEach((button) => {
-    button.addEventListener('click', () => {
-        displayVal += ` ${button.textContent} `;
-        outputText.textContent = displayVal;
-    });
-});
+const subtract = function(a, b) {
+	return a - b;
+};
+
+const multiply = function(a, b) {
+	return a * b;
+};
+
+const divide = function(a, b) {
+	return a / b;
+};
