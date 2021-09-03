@@ -1,17 +1,18 @@
-let displayNum1 = '';
-let displayNum2 = '';
-let num1 = null;
-let num2 = null;
-let displayText;
-let operatorVal = null;
 const clearButton = document.getElementById('clear');
 const backspaceButton = document.getElementById('backspace');
+const historyText = document.querySelector('.historical-text');
 const outputText = document.querySelector('.output-text');
 const numbers = Array.from(document.querySelectorAll('.number'));
 const operators = Array.from(document.querySelectorAll('.operator'));
 const absoluteValue = document.getElementById('absolute-value');
 const decimal = document.getElementById('decimal');
 const equals = document.getElementById('equals');
+let num1 = null;
+let num2 = null;
+let tempNum1 = '';
+let tempNum2 = '';
+let resultVal = null;
+let operatorVal = null;
 
 
 const add = function(a, b) {
@@ -33,47 +34,64 @@ const divide = function(a, b) {
 const operate = function(operator, a, b) {
 	switch(operator) {
 		case '÷':
-			num1 = divide(a, b);
+			resultVal = divide(a, b);
 			break;
 		case '×':
-			num1 = multiple(a, b);
+			resultVal = multiple(a, b);
 			break;
 		case '-':
-			num1 = subtract(a, b);
+			resultVal = subtract(a, b);
 			break;
 		case '+':
-			num1 = add(a, b);
+			resultVal = add(a, b);
 			break;
 	}
 	
-	operatorVal = null;
-	displayNum1 = num1.toString();
-	displayNum2 = '';
+	historyText.textContent = `${tempNum1} ${operatorVal} ${tempNum2} =`;
+	outputText.textContent = `${resultVal.toString()}`;
+	num1 = resultVal;
+	tempNum1 = resultVal.toString();
 	num2 = null;
+	tempNum2 = '';
 };
 
 numbers.forEach((button) => {
 	button.addEventListener('click', () => {
+		if (operatorVal === null) {
+			num1 = null;
+			tempNum1 = '';
+			resultVal = null;
+			historyText.textContent = '';
+		}
+		
 		if (num1 === null) {
-			displayNum1 += button.textContent;
-			outputText.textContent = `${displayNum1}`;
+			tempNum1 += button.textContent;
+			outputText.textContent = `${tempNum1}`;
 		} else if (num1 !== null && num2 === null) {
-			displayNum2 += button.textContent;
-			outputText.textContent = `${displayNum1} ${operatorVal} ${displayNum2}`;
+			tempNum2 += button.textContent;
+			outputText.textContent = `${tempNum2}`;
 		}
 	});
 });
 
 operators.forEach((button) => {
 	button.addEventListener('click', () => {
-		if (num1 === null) {
-			num1 = Number(displayNum1);
-		} else if (num2 === null && displayNum2.length > 0) {
-			num2 = Number(displayNum2);
+		if (num1 === null && tempNum1.length > 0) {
+			num1 = Number(tempNum1);
+		} else if (num1 !== null && tempNum2.length > 0) {
+			num2 = Number(tempNum2);
 			operate(operatorVal, num1, num2);
 		}
 		
 		operatorVal = button.textContent;
-		outputText.textContent = `${displayNum1} ${operatorVal}`;
+		historyText.textContent = `${tempNum1} ${operatorVal}`;
 	});
+});
+
+equals.addEventListener('click', () => {
+	if (tempNum2.length > 0 && operatorVal !== null) {
+		num2 = Number(tempNum2);
+		operate(operatorVal, num1, num2);
+		operatorVal = null;
+	}
 });
