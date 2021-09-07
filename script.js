@@ -89,6 +89,17 @@ operators.forEach((button) => {
 	});
 });
 
+clearButton.addEventListener('click', () => {
+	num1 = null;
+	num2 = null;
+	tempNum1 = '';
+	tempNum2 = '';
+	resultVal = null;
+	operatorVal = null;
+	historyText.textContent = '';
+	outputText.textContent = '0';
+});
+
 equals.addEventListener('click', () => {
 	if (tempNum2.length > 0 && operatorVal !== null) {
 		num2 = Number(tempNum2);
