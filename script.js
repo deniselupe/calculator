@@ -5,13 +5,14 @@ const historyText = document.querySelector('.historical-text');
 const outputText = document.querySelector('.output-text');
 const numbers = Array.from(document.querySelectorAll('.number'));
 const operators = Array.from(document.querySelectorAll('.operator'));
-const absoluteValue = document.getElementById('absolute-value');
-const decimal = document.getElementById('decimal');
+const plusMinusButton = document.getElementById('plus-minus');
+const decimalButton = document.getElementById('decimal');
 const equalsButton = document.getElementById('equals');
 let num1 = null;
 let num2 = null;
 let tempNum1 = '';
 let tempNum2 = '';
+let tempNum;
 let resultVal = null;
 let operatorVal = null;
 
@@ -125,5 +126,41 @@ equalsButton.addEventListener('click', () => {
 		operate(operatorVal, num1, num2);
 		operatorVal = null;
 		tempNum1 = '';
+	}
+});
+
+
+const plusMinus = function() {
+	if (tempNum.includes('-')) {
+		tempNum = tempNum.split('');
+		tempNum.splice(0, 1);
+	} else {
+		tempNum = tempNum.split('');
+		tempNum.unshift('-');
+	}
+	
+	tempNum = tempNum.join('');
+};
+
+plusMinusButton.addEventListener('click',  () => {
+	if (num1 === null && tempNum1.length > 0) {
+		tempNum = tempNum1;
+		plusMinus();
+		tempNum1 = tempNum;
+		outputText.textContent = `${tempNum1}`;
+	} else if (num1 !== null && tempNum2.length > 0) {
+		tempNum = tempNum2;
+		plusMinus();
+		tempNum2 = tempNum;
+		outputText.textContent = `${tempNum2}`;
+	} else if (num1 !== null && tempNum1.length === 0) {
+		tempNum1 = resultVal.toString();
+		tempNum = tempNum1;
+		plusMinus();
+		num1 = Number(tempNum);
+		resultVal = Number(tempNum);
+		tempNum1 = '';
+		historyText.textContent = `${resultVal}`;
+		outputText.textContent = `${resultVal}`;
 	}
 });
