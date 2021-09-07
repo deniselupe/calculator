@@ -59,7 +59,6 @@ numbers.forEach((button) => {
 	button.addEventListener('click', () => {
 		if (operatorVal === null) {
 			num1 = null;
-			tempNum1 = '';
 			resultVal = null;
 			historyText.textContent = '';
 		}
@@ -81,6 +80,8 @@ operators.forEach((button) => {
 		} else if (num1 !== null && tempNum2.length > 0) {
 			num2 = Number(tempNum2);
 			operate(operatorVal, num1, num2);
+		} else if (num1 !== null && tempNum1.length === 0) {
+			tempNum1 = resultVal.toString();
 		}
 		
 		operatorVal = button.textContent;
@@ -93,5 +94,6 @@ equals.addEventListener('click', () => {
 		num2 = Number(tempNum2);
 		operate(operatorVal, num1, num2);
 		operatorVal = null;
+		tempNum1 = '';
 	}
 });

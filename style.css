@@ -90,17 +90,14 @@ main {
 
 .button:hover {
 	transform: scale(1.1);
-}
-
-.button:active {
 	background-color: #fdfdfd;
 }
 
-.number {
+.purple {
 	background-color: #5e5fab;
 }
 
-.operator {
+.pink {
 	background-color: #ff80a0;
 }
 
