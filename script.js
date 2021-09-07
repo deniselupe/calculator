@@ -1,12 +1,13 @@
 const clearButton = document.getElementById('clear');
 const backspaceButton = document.getElementById('backspace');
+const percentButton = document.getElementById('percent');
 const historyText = document.querySelector('.historical-text');
 const outputText = document.querySelector('.output-text');
 const numbers = Array.from(document.querySelectorAll('.number'));
 const operators = Array.from(document.querySelectorAll('.operator'));
 const absoluteValue = document.getElementById('absolute-value');
 const decimal = document.getElementById('decimal');
-const equals = document.getElementById('equals');
+const equalsButton = document.getElementById('equals');
 let num1 = null;
 let num2 = null;
 let tempNum1 = '';
@@ -110,7 +111,15 @@ backspaceButton.addEventListener('click', () => {
 	}
 });
 
-equals.addEventListener('click', () => {
+percentButton.addEventListener('click', () => {
+	if (num1 !== null && tempNum2.length > 0) {
+		tempNum2 = (Number(tempNum2) * num1) / 100;
+		tempNum2 = tempNum2.toString();
+		outputText.textContent = tempNum2;
+	}
+});
+
+equalsButton.addEventListener('click', () => {
 	if (tempNum2.length > 0 && operatorVal !== null) {
 		num2 = Number(tempNum2);
 		operate(operatorVal, num1, num2);
