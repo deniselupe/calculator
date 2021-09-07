@@ -85,7 +85,15 @@ operators.forEach((button) => {
 			num1 = Number(tempNum1);
 		} else if (num1 !== null && tempNum2.length > 0) {
 			num2 = Number(tempNum2);
-			operate(operatorVal, num1, num2);
+			
+			if (operatorVal === '÷' && num2 === 0) {
+				outputText.textContent = 'Cannot divide by 0';
+				num2 = null;
+				tempNum2 = '';
+				return;
+			} else {
+				operate(operatorVal, num1, num2);
+			}
 		} else if (num1 !== null && tempNum1.length === 0) {
 			tempNum1 = resultVal.toString();
 		}
@@ -127,11 +135,20 @@ percentButton.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
 	if (tempNum2.length > 0 && operatorVal !== null) {
 		num2 = Number(tempNum2);
-		operate(operatorVal, num1, num2);
-		operatorVal = null;
-		tempNum1 = '';
+		
+		if (operatorVal === '÷' && num2 === 0) {
+			outputText.textContent = 'Cannot divide by 0';
+			num2 = null;
+			tempNum2 = '';
+			return;
+		} else {
+			operate(operatorVal, num1, num2);
+			operatorVal = null;
+			tempNum1 = '';
+		}
 	}
 });
+
 
 const plusMinus = function() {
 	if (tempNum.includes('-')) {
