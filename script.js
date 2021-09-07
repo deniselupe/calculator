@@ -100,6 +100,16 @@ clearButton.addEventListener('click', () => {
 	outputText.textContent = '0';
 });
 
+backspaceButton.addEventListener('click', () => {
+	if (num1 === null && tempNum1.length > 0) {
+		tempNum1 = '';
+		outputText.textContent = '0';
+	} else if (num2 === null &  tempNum2.length > 0) {
+		tempNum2 = '';
+		outputText.textContent = '0';
+	}
+});
+
 equals.addEventListener('click', () => {
 	if (tempNum2.length > 0 && operatorVal !== null) {
 		num2 = Number(tempNum2);
