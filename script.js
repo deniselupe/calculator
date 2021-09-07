@@ -37,15 +37,19 @@ const operate = function(operator, a, b) {
 	switch(operator) {
 		case '÷':
 			resultVal = divide(a, b);
+			resultVal = Math.round(resultVal * 1000) / 1000;
 			break;
 		case '×':
-			resultVal = multiple(a, b);
+			resultVal = multiply(a, b);
+			resultVal = Math.round(resultVal * 1000) / 1000;
 			break;
 		case '-':
 			resultVal = subtract(a, b);
+			resultVal = Math.round(resultVal * 1000) / 1000;
 			break;
 		case '+':
 			resultVal = add(a, b);
+			resultVal = Math.round(resultVal * 1000) / 1000;
 			break;
 	}
 	
@@ -129,7 +133,6 @@ equalsButton.addEventListener('click', () => {
 	}
 });
 
-
 const plusMinus = function() {
 	if (tempNum.includes('-')) {
 		tempNum = tempNum.split('');
@@ -162,5 +165,15 @@ plusMinusButton.addEventListener('click',  () => {
 		tempNum1 = '';
 		historyText.textContent = `${resultVal}`;
 		outputText.textContent = `${resultVal}`;
+	}
+});
+
+decimalButton.addEventListener('click', () => {
+	if (num1 === null && tempNum1.length > 0 && (!tempNum1.includes('.'))) {
+		tempNum1 += decimalButton.textContent;
+		outputText.textContent = `${tempNum1}`;
+	} else if (num2 === null &  tempNum2.length > 0 && (!tempNum2.includes('.'))) {
+		tempNum2 += decimalButton.textContent;
+		outputText.textContent = `${tempNum2}`;
 	}
 });
