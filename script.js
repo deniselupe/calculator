@@ -3,8 +3,8 @@ const backspaceButton = document.getElementById('backspace');
 const percentButton = document.getElementById('percent');
 const historyText = document.querySelector('.historical-text');
 const outputText = document.querySelector('.output-text');
-const numbers = Array.from(document.querySelectorAll('.number'));
-const operators = Array.from(document.querySelectorAll('.operator'));
+const numbers = Array.from(document.querySelectorAll('[data-number]'));
+const operators = Array.from(document.querySelectorAll('[data-operator]'));
 const plusMinusButton = document.getElementById('plus-minus');
 const decimalButton = document.getElementById('decimal');
 const equalsButton = document.getElementById('equals');
@@ -148,7 +148,6 @@ equalsButton.addEventListener('click', () => {
 		}
 	}
 });
-
 
 const plusMinus = function() {
 	if (tempNum.includes('-')) {
