@@ -16,7 +16,6 @@ let tempNum;
 let resultVal = null;
 let operatorVal = null;
 
-
 const add = function(a, b) {
 	return a + b;
 };
@@ -33,6 +32,7 @@ const divide = function(a, b) {
 	return a / b;
 };
 
+// Operate function for evaluation
 const operate = function(operator, a, b) {
 	switch(operator) {
 		case '÷':
@@ -53,6 +53,8 @@ const operate = function(operator, a, b) {
 			break;
 	}
 	
+	// Display operation to historyWindow and clear tempNum2 and num2
+	// This assigns resultVal as the new first operand for the next calculation
 	historyText.textContent = `${tempNum1} ${operatorVal} ${tempNum2} =`;
 	outputText.textContent = `${resultVal.toString()}`;
 	num1 = resultVal;
@@ -61,14 +63,17 @@ const operate = function(operator, a, b) {
 	tempNum2 = '';
 };
 
+// Functionality for all of the number buttons
 numbers.forEach((button) => {
 	button.addEventListener('click', () => {
+		// Allows the end user to enter a fresh set of values after running equalsButton
 		if (operatorVal === null) {
 			num1 = null;
 			resultVal = null;
 			historyText.textContent = '';
 		}
 		
+		// Determines if input is going towards first operand or second
 		if (num1 === null) {
 			tempNum1 += button.textContent;
 			outputText.textContent = `${tempNum1}`;
@@ -79,6 +84,7 @@ numbers.forEach((button) => {
 	});
 });
 
+// Functionality for all operator buttons except percentButton
 operators.forEach((button) => {
 	button.addEventListener('click', () => {
 		if (num1 === null && tempNum1.length > 0) {
@@ -86,6 +92,7 @@ operators.forEach((button) => {
 		} else if (num1 !== null && tempNum2.length > 0) {
 			num2 = Number(tempNum2);
 			
+			// Prevent users from dividing a number by zero
 			if (operatorVal === '÷' && num2 === 0) {
 				outputText.textContent = 'Cannot divide by 0';
 				num2 = null;
@@ -94,15 +101,18 @@ operators.forEach((button) => {
 			} else {
 				operate(operatorVal, num1, num2);
 			}
+		// This is for when users execute equalsButton and their tempNum1 clears
 		} else if (num1 !== null && tempNum1.length === 0) {
 			tempNum1 = resultVal.toString();
 		}
 		
+		// Assigns new operatorVal and displays the values for the new calculation
 		operatorVal = button.textContent;
 		historyText.textContent = `${tempNum1} ${operatorVal}`;
 	});
 });
 
+// Functionality for clearButton
 clearButton.addEventListener('click', () => {
 	num1 = null;
 	num2 = null;
@@ -114,6 +124,7 @@ clearButton.addEventListener('click', () => {
 	outputText.textContent = '0';
 });
 
+// Functionality for backspaceButton
 backspaceButton.addEventListener('click', () => {
 	if (num1 === null && tempNum1.length > 0) {
 		tempNum1 = '';
@@ -124,6 +135,8 @@ backspaceButton.addEventListener('click', () => {
 	}
 });
 
+// Functionality for percentButton
+// Users will have to manually click the button to utilize its functionality
 percentButton.addEventListener('click', () => {
 	if (num1 !== null && tempNum2.length > 0) {
 		tempNum2 = (Number(tempNum2) * num1) / 100;
@@ -132,16 +145,24 @@ percentButton.addEventListener('click', () => {
 	}
 });
 
+// Functionality for the equalsButton
 equalsButton.addEventListener('click', () => {
+	// Can only execute if there is operatorVal and tempNum2 values present
 	if (tempNum2.length > 0 && operatorVal !== null) {
 		num2 = Number(tempNum2);
 		
+		// Prevent users from dividing a number by zero
 		if (operatorVal === '÷' && num2 === 0) {
 			outputText.textContent = 'Cannot divide by 0';
 			num2 = null;
 			tempNum2 = '';
 			return;
 		} else {
+			/*
+				This gives the user the option to continue with resultVal as
+				the new first operand num1 or start over with a brand new num1
+				operand.
+			*/
 			operate(operatorVal, num1, num2);
 			operatorVal = null;
 			tempNum1 = '';
@@ -149,6 +170,7 @@ equalsButton.addEventListener('click', () => {
 	}
 });
 
+// Function for the plusMinusButton functionality
 const plusMinus = function() {
 	if (tempNum.includes('-')) {
 		tempNum = tempNum.split('');
@@ -161,18 +183,23 @@ const plusMinus = function() {
 	tempNum = tempNum.join('');
 };
 
+// Functionality for plusMinusButton, works as a toggle
+// Users will have to manually click the button to utilize its functionality
 plusMinusButton.addEventListener('click',  () => {
 	if (num1 === null && tempNum1.length > 0) {
+		// This applies plusMinus() on tempNum1
 		tempNum = tempNum1;
 		plusMinus();
 		tempNum1 = tempNum;
 		outputText.textContent = `${tempNum1}`;
 	} else if (num1 !== null && tempNum2.length > 0) {
+		// This applies plusMinus() on tempNum2
 		tempNum = tempNum2;
 		plusMinus();
 		tempNum2 = tempNum;
 		outputText.textContent = `${tempNum2}`;
 	} else if (num1 !== null && tempNum1.length === 0) {
+		// This applies plusMinus() on resultVal value when equalsButton is executed
 		tempNum1 = resultVal.toString();
 		tempNum = tempNum1;
 		plusMinus();
@@ -184,6 +211,7 @@ plusMinusButton.addEventListener('click',  () => {
 	}
 });
 
+// Functionality for decimalButton
 decimalButton.addEventListener('click', () => {
 	if (num1 === null && tempNum1.length > 0 && (!tempNum1.includes('.'))) {
 		tempNum1 += decimalButton.textContent;
@@ -192,4 +220,10 @@ decimalButton.addEventListener('click', () => {
 		tempNum2 += decimalButton.textContent;
 		outputText.textContent = `${tempNum2}`;
 	}
+});
+
+// Functionality for keyboard support, except percentButton and plusMinusButton
+window.addEventListener('keydown', (event) => {
+	const button = document.querySelector(`[data-key="${event.keyCode}"]`);
+	button.click();
 });
